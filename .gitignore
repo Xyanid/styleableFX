@@ -1,12 +1,24 @@
 *.class
+target
+*.bak
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# eclipse #
+*.prefs
+.classpath
+.project
+.metadata
 
 # Package Files #
 *.jar
 *.war
 *.ear
+*.sha1
+*.sha1
+*.repositories
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+
+# intelliJ #
+.idea
+*.iml
+*.ipr
+*.iws
