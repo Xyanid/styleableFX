@@ -1,7 +1,7 @@
 /*
  *
  * ******************************************************************************
- *  * Copyright 2015 - 2015 Xyanid
+ *  * Copyright 2015 - 2016 Xyanid
  *  *
  *  * Licensed under the Apache License, Version 2.0 (the "License");
  *  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import javafx.scene.Scene;
 import java.util.HashSet;
 
 /**
- * This interfaces will apply the behavior to the given {@link EventTarget}. The intention is to get certain
+ * This class will apply the behavior to the given {@link EventTarget}. The intention is to get certain
  * properties from the {@link EventTarget} and add {@link javafx.beans.value.ChangeListener}. Thus we can react to
  * them e.g. when there is a change of the {@link Node#scene} we can react to it any if needed attach a listener to
  * its {@link Scene#width} so we can adjust the width of the node to that of the scene.
@@ -146,11 +146,13 @@ public abstract class BehaviorBase<TEventTarget extends EventTarget> {
 
     // region Override Object
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         return getClass().hashCode();
     }
 
-    @Override public boolean equals(final Object obj) {
+    @Override
+    public boolean equals(final Object obj) {
         boolean result = super.equals(obj);
 
         if (!result) {
