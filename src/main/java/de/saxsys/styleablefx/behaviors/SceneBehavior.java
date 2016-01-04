@@ -1,7 +1,7 @@
 /*
  *
  * ******************************************************************************
- *  * Copyright 2015 - 2015 Xyanid
+ *  * Copyright 2015 - 2016 Xyanid
  *  *
  *  * Licensed under the Apache License, Version 2.0 (the "License");
  *  * you may not use this file except in compliance with the License.
@@ -46,9 +46,7 @@ public class SceneBehavior<TNode extends Node> extends BehaviorBase<TNode> {
     /**
      * This listener will be called when the scene of the pane was changed.
      */
-    private final ChangeListener<Scene> sceneChangeListener = (observable, oldValue, newValue) -> {
-        scene.set(newValue);
-    };
+    private final ChangeListener<Scene> sceneChangeListener = (observable, oldValue, newValue) -> scene.set(newValue);
 
     /**
      * @return the value of the {@link Scene} of the node.

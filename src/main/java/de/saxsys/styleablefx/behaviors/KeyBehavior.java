@@ -20,35 +20,50 @@
 package de.saxsys.styleablefx.behaviors;
 
 import javafx.scene.Node;
-import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyEvent;
 
 /**
- * This is a basic behavior to allow for {@link Node}s to close the window it resides it.
+ * This behavior allows for the {@link Scene} of the {@link Node} to apply certain {@link KeyCodeCombination}s.
  *
  * @param <TNode> the type of the node this behavior will be applied to
  *
  * @author Xyanid on 23.10.2015.
  */
-public class CloseBehavior<TNode extends Node> extends StageBehavior<TNode> {
+public class KeyBehavior<TNode extends Node> extends SceneBehavior<TNode> {
 
     //region Constructor
 
     /**
-     * creates a new instance of the behavior using the given methodname.
-     *
-     * @param methodName value of the method to be called
+     * This behavior will manage the key events that will be added to the scene.
      */
-    public CloseBehavior(final String methodName) {
-        super(methodName);
+    private final SceneEventBehavior<Scene, KeyEvent> sceneEventBehavior = new SceneEventBehavior<>();
+
+    //endregion
+
+    //region Constructor
+
+    /**
+     * Creates a new instance of the behavior.
+     */
+    public KeyBehavior() {
+        //TODO attach a listener to the scene so we can apply the scene behavior to is
     }
 
     //endregion
 
-    //region Implement BehaviorBase
+    // region Override SceneBehavior
 
-    @Override protected void handleStage(final Stage stage) {
-        stage.close();
+    @Override
+    public void applyBehavior(final TNode node) throws Exception {
+        super.applyBehavior(node);
     }
 
-    //endregion
+    @Override
+    public void removeBehavior(final TNode node) throws Exception {
+        super.removeBehavior(node);
+    }
+
+    // endregion
 }

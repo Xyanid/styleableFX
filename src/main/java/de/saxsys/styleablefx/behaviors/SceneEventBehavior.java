@@ -1,7 +1,7 @@
 /*
  *
  * ******************************************************************************
- *  * Copyright 2015 - 2015 Xyanid
+ *  * Copyright 2015 - 2016 Xyanid
  *  *
  *  * Licensed under the Apache License, Version 2.0 (the "License");
  *  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@
 
 package de.saxsys.styleablefx.behaviors;
 
-import eu.lestard.doc.Beta;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
@@ -42,7 +41,7 @@ import java.util.HashSet;
  * @author Xyanid on 23.10.2015.
  */
 
-@Beta public class SceneEventBehavior<TScene extends Scene, TEventType extends Event> extends BehaviorBase<TScene> {
+public class SceneEventBehavior<TScene extends Scene, TEventType extends Event> extends BehaviorBase<TScene> {
 
     // region Class
 
