@@ -170,9 +170,9 @@ public class SVGStyleableAddition extends StyleableAdditionBase {
     //region Getter/Setter
 
     /**
-     * Returns the {@link de.saxsys.svgfx.core.SVGStyleableAddition#svgGroup}.
+     * Returns the {@link #svgGroup}.
      *
-     * @return the {@link de.saxsys.svgfx.core.SVGStyleableAddition#svgGroup}
+     * @return the {@link #svgGroup}
      */
     public final Group getSvgGroup() {
         return svgGroup;
