@@ -40,7 +40,7 @@ public abstract class StyleableAdditionBase {
      * Returns the {@link StyleableAdditionBase} from the given {@link Styleable} using the given clazz. This method is supposed to be used inside a {@link CssMetaData} of a
      * {@link StyleableAdditionBase} and ensured that the {@link StyleableAdditionBase} is found on the {@link Styleable} which used the {@link StyleableAdditionBase}.
      * The way this method works is that it checks if the passed {@link Styleable} is a {@link IStyleableAdditionProvider}, if so the desired {@link StyleableAdditionBase} is requested from the
-     * {@link Styleable}. If the {@link StyleableAdditionBase} was not found this way, it is possible that the {@link Styleable} is a {@link Control}. In this case the
+     * {@link IStyleableAdditionProvider}. If the {@link StyleableAdditionBase} was not found this way, it is possible that the {@link Styleable} is a {@link Control}. In this case the
      * {@link javafx.scene.control.Skin} is checked the same way.
      *
      * @param styleable            {@link Styleable} to use.

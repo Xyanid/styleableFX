@@ -34,9 +34,9 @@ import javafx.scene.shape.SVGPath;
 import org.xml.sax.SAXParseException;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -51,6 +51,22 @@ import java.util.Map;
 public class SVGStyleableAddition extends StyleableAdditionBase {
 
     //region Classes
+
+    /**
+     * Will be thrown when the parsing of a svg file fails.
+     */
+    public class ParseException extends RuntimeException {
+
+        /**
+         * Createas new instance with the given message and cause.
+         *
+         * @param message the {@link String} to use as the message.
+         * @param cause   the actual cause for this {@link RuntimeException} to be thrown.
+         */
+        public ParseException(String message, Throwable cause) {
+            super(message, cause);
+        }
+    }
 
     /**
      * Contains all styleable CssMetaData needed.
@@ -75,7 +91,7 @@ public class SVGStyleableAddition extends StyleableAdditionBase {
     /**
      * CssMetaData for to make the Url styleable via Css.
      */
-    private static final CssMetaData<Styleable, String> SVG_URL = new CssMetaData<Styleable, String>("-saxsys-svg-url", StyleConverter.getStringConverter(), null) {
+    static final CssMetaData<Styleable, String> SVG_URL = new CssMetaData<Styleable, String>("-saxsys-svg-url", StyleConverter.getStringConverter(), null) {
         /**
          * determines if the property can be set using Css
          *
@@ -102,7 +118,7 @@ public class SVGStyleableAddition extends StyleableAdditionBase {
     /**
      * CssMetaData for to make the WillCacheSvg styleable via Css.
      */
-    private static final CssMetaData<Styleable, Boolean> WILL_CACHE_SVG = new CssMetaData<Styleable, Boolean>("-saxsys-will-cache-svg", StyleConverter.getBooleanConverter(), true) {
+    static final CssMetaData<Styleable, Boolean> WILL_CACHE_SVG = new CssMetaData<Styleable, Boolean>("-saxsys-will-cache-svg", StyleConverter.getBooleanConverter(), true) {
         /**
          * determines if the property can be set using Css
          *
@@ -170,9 +186,9 @@ public class SVGStyleableAddition extends StyleableAdditionBase {
     //region Getter/Setter
 
     /**
-     * Returns the {@link de.saxsys.svgfx.core.SVGStyleableAddition#svgGroup}.
+     * Returns the {@link #svgGroup}.
      *
-     * @return the {@link de.saxsys.svgfx.core.SVGStyleableAddition#svgGroup}
+     * @return the {@link #svgGroup}
      */
     public final Group getSvgGroup() {
         return svgGroup;
@@ -235,15 +251,18 @@ public class SVGStyleableAddition extends StyleableAdditionBase {
      * @param observable, the property which changed
      * @param oldValue,   the old value of the property
      * @param newValue,   the new value of the property
+     *
+     * @throws IllegalArgumentException if the given newValue represents a file that is not available.
+     * @throws ParseException           if there is an error during the parsing of the svg file.
      */
-    private void loadSVG(final ObservableValue<? extends String> observable, final String oldValue, final String newValue) {
+    private void loadSVG(final ObservableValue<? extends String> observable, final String oldValue, final String newValue) throws IllegalArgumentException, ParseException {
 
         if (newValue != null) {
 
             File file = getFile(newValue);
 
             if (file == null || !file.isFile() || !file.exists()) {
-                throw new IllegalArgumentException(String.format("Given file %s does not exist or is not a file.", newValue));
+                throw new IllegalArgumentException(new FileNotFoundException(String.format("Given file %s does not exist or is not a file.", newValue)));
             }
 
             svgGroup.getChildren().clear();
@@ -253,8 +272,7 @@ public class SVGStyleableAddition extends StyleableAdditionBase {
             try {
                 data = getData(file);
             } catch (NoSuchMethodException | SAXParseException | IOException e) {
-                e.printStackTrace();
-                return;
+                throw new ParseException("Error during parsing of the svg file", e);
             }
 
             svgGroup.getChildren().add(data);
@@ -272,9 +290,9 @@ public class SVGStyleableAddition extends StyleableAdditionBase {
      */
     private File getFile(final String filepath) {
 
-        // try to get the file directly
+        // try to get the file directly or relative
         File file = new File(filepath);
-        if (file.exists()) {
+        if (file.isFile()) {
             return file;
         }
 
@@ -282,15 +300,9 @@ public class SVGStyleableAddition extends StyleableAdditionBase {
         URL url = getClass().getClassLoader().getResource(filepath);
         if (url != null) {
             file = new File(url.getFile());
-            if (file.exists()) {
+            if (file.isFile()) {
                 return file;
             }
-        }
-
-        // try to load the file relative to our location
-        file = new File(Paths.get(Paths.get(".").toAbsolutePath().toString(), filepath).toString());
-        if (file.exists()) {
-            return file;
         }
 
         return null;
