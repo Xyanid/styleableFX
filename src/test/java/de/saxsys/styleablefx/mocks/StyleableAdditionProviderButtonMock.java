@@ -21,25 +21,33 @@ package de.saxsys.styleablefx.mocks;
 
 import de.saxsys.styleablefx.core.IStyleableAdditionProvider;
 import de.saxsys.styleablefx.core.StyleableAdditionBase;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.Button;
 
 import java.util.Optional;
 
 /**
  * Mock to create and test the {@link StyleableAdditionBase}
+ *
  * @author Xyanid on 10.01.2016.
  */
-public class StyleableAdditionProviderPaneMock extends Pane implements IStyleableAdditionProvider {
+public class StyleableAdditionProviderButtonMock extends Button implements IStyleableAdditionProvider {
 
-    StyleableAdditionBaseMockA addition = new StyleableAdditionBaseMockA();
+    StyleableAdditionBaseMockB addition = new StyleableAdditionBaseMockB();
+
+
+    public StyleableAdditionProviderButtonMock() {
+        super();
+
+        setSkin(new StyleableAdditionProviderButtonSkinMock(this));
+    }
 
     @Override
     public <TStyleableAddition extends StyleableAdditionBase> Optional<TStyleableAddition> getStyleableAddition(Class<TStyleableAddition> clazz) {
 
-        if (clazz.equals(StyleableAdditionBaseMockA.class)) {
+        if (clazz.equals(StyleableAdditionBaseMockB.class)) {
             return Optional.of(clazz.cast(addition));
         } else {
-            return Optional.empty();
+            return ((StyleableAdditionProviderButtonSkinMock) getSkin()).getStyleableAddition(clazz);
         }
     }
 }

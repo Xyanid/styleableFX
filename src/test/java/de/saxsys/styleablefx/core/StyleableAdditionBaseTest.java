@@ -19,14 +19,17 @@
 
 package de.saxsys.styleablefx.core;
 
+import de.saxsys.styleablefx.mocks.StyleableAdditionBaseMockA;
+import de.saxsys.styleablefx.mocks.StyleableAdditionBaseMockB;
+import de.saxsys.styleablefx.mocks.StyleableAdditionBaseMockC;
+import de.saxsys.styleablefx.mocks.StyleableAdditionProviderButtonMock;
 import de.saxsys.styleablefx.mocks.StyleableAdditionProviderPaneMock;
 import javafx.css.Styleable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Contains test for {@link StyleableAdditionBase}.
@@ -36,37 +39,36 @@ import static org.junit.Assert.*;
 public class StyleableAdditionBaseTest extends BaseUITest {
 
     /**
-     * Ensures that a styleable addition provider is retrieved when {@link StyleableAdditionBase#getStyleableAddition(Styleable)} is called with either a region or a node which are directly
+     * Ensures that a styleable addition provider is retrieved when {@link StyleableAdditionBase#getStyleableAddition(Styleable, Class)} is called with either a region or a node which are directly
      */
     @Test
     public void ensureStyleableAdditionProviderCanBeRetrieved() {
 
-        StyleableAdditionProviderPaneMock pane = new StyleableAdditionProviderPaneMock();
+        assertNotNull(StyleableAdditionBase.getStyleableAddition(new StyleableAdditionProviderPaneMock(), StyleableAdditionBaseMockA.class));
 
-        IStyleableAdditionProvider provider = StyleableAdditionBase.getStyleableAddition(pane);
+        assertNotNull(StyleableAdditionBase.getStyleableAddition(new StyleableAdditionProviderButtonMock(), StyleableAdditionBaseMockB.class));
 
-        assertNotNull(provider);
-        assertThat(provider, instanceOf(StyleableAdditionProviderPaneMock.class));
+        assertNotNull(StyleableAdditionBase.getStyleableAddition(new StyleableAdditionProviderButtonMock(), StyleableAdditionBaseMockC.class));
     }
 
     /**
      * Ensures that an {@link IllegalArgumentException} is thrown when
-     * {@link StyleableAdditionBase#getStyleableAddition(Styleable)} is provided with an {@link Styleable} that does not extend {@link IStyleableAdditionProvider}.
+     * {@link StyleableAdditionBase#getStyleableAddition(Styleable, Class)} is provided with an {@link Styleable} that does not extend {@link IStyleableAdditionProvider}.
      */
     @Test(expected = IllegalArgumentException.class)
     public void ensureExceptionWillBeThrownIfTheStyleableDoesNotInheritFromIStyleableAdditionProvider() {
 
-        StyleableAdditionBase.getStyleableAddition(new Pane());
+        StyleableAdditionBase.getStyleableAddition(new Pane(), StyleableAdditionBaseMockA.class);
     }
 
     /**
-     * Ensures that an {@link IllegalArgumentException} is thrown when{@link StyleableAdditionBase#getStyleableAddition(Styleable)} is provided with an {@link javafx.scene.control.Control} that
+     * Ensures that an {@link IllegalArgumentException} is thrown when{@link StyleableAdditionBase#getStyleableAddition(Styleable, Class)} is provided with an {@link javafx.scene.control.Control} that
      * does not
      * extend have a {@link javafx.scene.control.Skin} which {@link IStyleableAdditionProvider}.
      */
     @Test(expected = IllegalArgumentException.class)
     public void ensureExceptionWillBeThrownIfTheStyleableIsAControlAndDoesNotHaveASkinWhichInheritsFromIStyleableAdditionProvider() {
 
-        IStyleableAdditionProvider provider = StyleableAdditionBase.getStyleableAddition(new Button());
+        StyleableAdditionBase.getStyleableAddition(new Button(), StyleableAdditionBaseMockA.class);
     }
 }

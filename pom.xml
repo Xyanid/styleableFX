@@ -26,7 +26,7 @@
 
     <groupId>de.saxsys</groupId>
     <artifactId>styleablefx</artifactId>
-    <version>0.8.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -37,7 +37,7 @@
         <dependency>
             <groupId>de.saxsys</groupId>
             <artifactId>svgfx</artifactId>
-            <version>0.8.0</version>
+            <version>0.9.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

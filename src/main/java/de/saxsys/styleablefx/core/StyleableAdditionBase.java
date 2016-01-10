@@ -22,10 +22,10 @@ package de.saxsys.styleablefx.core;
 import javafx.css.CssMetaData;
 import javafx.css.Styleable;
 import javafx.scene.control.Control;
-import javafx.scene.control.Skin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The idea of this class is simply to allow both {@link javafx.scene.layout.Region}s and {@link Control}s to share a base class which responsible to style a {@link javafx.scene.Node},
@@ -37,38 +37,11 @@ import java.util.List;
 public abstract class StyleableAdditionBase {
 
     /**
-     * Returns the {@link IStyleableAdditionProvider} from the given {@link Styleable}.
-     * The {@link IStyleableAdditionProvider} is either the {@link Styleable} itself or a {@link javafx.scene.control.Skin} in case the provided {@link Styleable} is a {@link Control}.
-     * This is needed since {@link Control}s are only styleable via their {@link javafx.scene.control.Skin}s.
-     *
-     * @param styleable the {@link Styleable} from which the {@link IStyleableAdditionProvider} is to be retrieved.
-     *
-     * @return the {@link IStyleableAdditionProvider} associated with the given {@link Styleable}.
-     */
-    public static IStyleableAdditionProvider getStyleableAddition(final Styleable styleable) {
-        if (styleable == null) {
-            throw new IllegalArgumentException("given styleable must not be null");
-        }
-
-        if (styleable instanceof IStyleableAdditionProvider) {
-            return IStyleableAdditionProvider.class.cast(styleable);
-        } else if (styleable instanceof Control) {
-
-            Skin skin = ((Control) styleable).getSkin();
-
-            if (skin == null) {
-                throw new IllegalArgumentException("Given styleable is a control without a skin");
-            }
-
-            return IStyleableAdditionProvider.class.cast(skin);
-        }
-
-        throw new IllegalArgumentException("Given styleable does not implement IStyleableAdditionProvider or is not a Control");
-    }
-
-    /**
-     * Returns the {@link StyleableAdditionBase} from the given {@link Styleable} using the given clazz. Using this method will invoke {@link #getStyleableAddition(Styleable)} to
-     * determine if the {@link Styleable} is either a {@link Control} or {@link javafx.scene.layout.Region}.
+     * Returns the {@link StyleableAdditionBase} from the given {@link Styleable} using the given clazz. This method is supposed to be used inside a {@link CssMetaData} of a
+     * {@link StyleableAdditionBase} and ensured that the {@link StyleableAdditionBase} is found on the {@link Styleable} which used the {@link StyleableAdditionBase}.
+     * The way this method works is that it checks if the passed {@link Styleable} is a {@link IStyleableAdditionProvider}, if so the desired {@link StyleableAdditionBase} is requested from the
+     * {@link Styleable}. If the {@link StyleableAdditionBase} was not found this way, it is possible that the {@link Styleable} is a {@link Control}. In this case the
+     * {@link javafx.scene.control.Skin} is checked the same way.
      *
      * @param styleable            {@link Styleable} to use.
      * @param clazz                class to use.
@@ -76,15 +49,36 @@ public abstract class StyleableAdditionBase {
      *
      * @return the {@link StyleableAdditionBase} from the {@link Styleable}.
      *
-     * @throws IllegalArgumentException in case the given class is null.
+     * @throws IllegalArgumentException if either {@link Styleable} or {@link Class} is null or the desired {@link StyleableAdditionBase} was not found on the {@link Styleable}.
      */
     public static <TStyleableAddition extends StyleableAdditionBase> TStyleableAddition getStyleableAddition(final Styleable styleable, final Class<TStyleableAddition> clazz) {
 
-        if (clazz == null) {
-            throw new IllegalArgumentException("given class must not be null");
+        if (styleable == null) {
+            throw new IllegalArgumentException("Given styleable is null");
         }
 
-        return getStyleableAddition(styleable).getStyleableAddition(clazz);
+        if (clazz == null) {
+            throw new IllegalArgumentException("Given class must not be null");
+        }
+
+        Optional<TStyleableAddition> styleableAddition = Optional.empty();
+
+        // first we check if the element itself already provided the desired StyleableAdditionBase
+        if (styleable instanceof IStyleableAdditionProvider) {
+            styleableAddition = IStyleableAdditionProvider.class.cast(styleable).getStyleableAddition(clazz);
+        }
+
+        // if no StyleableAdditionBase was found yet, we need might need to look into the controls skin
+        if (!styleableAddition.isPresent() && styleable instanceof Control && ((Control) styleable).getSkin() != null) {
+            styleableAddition = IStyleableAdditionProvider.class.cast(((Control) styleable).getSkin()).getStyleableAddition(clazz);
+        }
+
+        // if we still do not have a StyleableAdditionBase at this point the method failed
+        if (!styleableAddition.isPresent()) {
+            throw new IllegalArgumentException(String.format("Given StyleableAdditionBase for clazz %s was not found on provided styleable %s", clazz.getName(), styleable.getClass().getName()));
+        }
+
+        return styleableAddition.get();
     }
 
     /**

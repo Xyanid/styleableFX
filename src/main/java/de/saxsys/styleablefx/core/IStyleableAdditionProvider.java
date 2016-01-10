@@ -19,8 +19,12 @@
 
 package de.saxsys.styleablefx.core;
 
+import java.util.Optional;
+
 /**
- * This interface is to be attached either a {@link javafx.scene.control.Skin} or {@link javafx.scene.layout.Region} that use a {@link StyleableAdditionBase}.
+ * This interface is to be attached either a {@link javafx.scene.control.Skin} or {@link javafx.css.Styleable} that use a {@link StyleableAdditionBase}.
+ * This is needed because we do not know which has the {@link StyleableAdditionBase}, it might either be the {@link javafx.css.Styleable} itself or, in case it is a
+ * {@link javafx.scene.control.Control} its {@link javafx.scene.control.Skin}.
  *
  * @author Xyanid on 08.11.2015.
  */
@@ -29,11 +33,11 @@ public interface IStyleableAdditionProvider {
     /**
      * Provides the {@link StyleableAdditionBase} for the desired class.
      *
-     * @param clazz                the class for which the skin addition should be returned.
-     * @param <TStyleableAddition> type of the styleable
+     * @param clazz                the {@link Class} for which the skin addition should be returned.
+     * @param <TStyleableAddition> type of the {@link StyleableAdditionBase}.
      *
-     * @return the {@link StyleableAdditionBase} that is attached to this skin
+     * @return the {@link StyleableAdditionBase} that is attached or {@link Optional#empty()} if the desired element is not supported.
      */
-    <TStyleableAddition extends StyleableAdditionBase> TStyleableAddition getStyleableAddition(final Class<TStyleableAddition> clazz);
+    <TStyleableAddition extends StyleableAdditionBase> Optional<TStyleableAddition> getStyleableAddition(final Class<TStyleableAddition> clazz);
 }
 

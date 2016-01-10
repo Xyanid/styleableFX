@@ -29,6 +29,7 @@ import javafx.scene.Group;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * This group contains svg data provided by an SVG Parser. It allows for the svg data to be switched dynamically via its styleable properties.
@@ -116,11 +117,12 @@ public class SVGGroup extends Group implements IStyleableAdditionProvider {
      * {@inheritDoc}
      */
     @Override
-    public <TStyleableAddition extends StyleableAdditionBase> TStyleableAddition getStyleableAddition(Class<TStyleableAddition> clazz) {
+    public <TStyleableAddition extends StyleableAdditionBase> Optional<TStyleableAddition> getStyleableAddition(Class<TStyleableAddition> clazz) {
         if (clazz.equals(SVGStyleableAddition.class)) {
-            return clazz.cast(styleAddition);
+            return Optional.of(clazz.cast(styleAddition));
+        } else {
+            return Optional.empty();
         }
-        return null;
     }
 
     // endregion

@@ -17,29 +17,11 @@
  *  *****************************************************************************
  */
 
-package de.saxsys.styleablefx.mocks;
-
-import de.saxsys.styleablefx.core.IStyleableAdditionProvider;
-import de.saxsys.styleablefx.core.StyleableAdditionBase;
-import javafx.scene.layout.Pane;
-
-import java.util.Optional;
+package de.saxsys.styleablefx.additions;
 
 /**
- * Mock to create and test the {@link StyleableAdditionBase}
+ * This class tests the {@link SVGStyleableAddition}.
+ *
  * @author Xyanid on 10.01.2016.
  */
-public class StyleableAdditionProviderPaneMock extends Pane implements IStyleableAdditionProvider {
-
-    StyleableAdditionBaseMockA addition = new StyleableAdditionBaseMockA();
-
-    @Override
-    public <TStyleableAddition extends StyleableAdditionBase> Optional<TStyleableAddition> getStyleableAddition(Class<TStyleableAddition> clazz) {
-
-        if (clazz.equals(StyleableAdditionBaseMockA.class)) {
-            return Optional.of(clazz.cast(addition));
-        } else {
-            return Optional.empty();
-        }
-    }
-}
+public class SVGStyleableAdditionTest {}
