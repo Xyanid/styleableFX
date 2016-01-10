@@ -17,35 +17,20 @@
  *  *****************************************************************************
  */
 
-package de.saxsys.styleablefx.behaviors;
+package de.saxsys.styleablefx.mocks;
 
-import javafx.embed.swing.JFXPanel;
+import de.saxsys.styleablefx.core.IStyleableAdditionProvider;
+import de.saxsys.styleablefx.core.StyleableAdditionBase;
 import javafx.scene.layout.Pane;
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
 
 /**
- * @author rico.hentschel on 05.10.2015.
+ * Mock to create and test the {@link StyleableAdditionBase}
+ * Created by Xyanid on 10.01.2016.
  */
-public final class SceneBehaviorTest {
+public class StyleableAdditionProviderPaneMock extends Pane implements IStyleableAdditionProvider {
 
-    /**
-     *
-     */
-    @Test
-    @Ignore(value = "Does not work on CI Travis server")
-    public void create() {
-        final JFXPanel fxPanel = new JFXPanel();
-
-        Pane pane = new Pane();
-
-        SceneBehavior behavior = new SceneBehavior();
-
-        try {
-            behavior.applyBehavior(pane);
-        } catch (Exception e) {
-            Assert.fail();
-        }
+    @Override
+    public <TStyleableAddition extends StyleableAdditionBase> TStyleableAddition getStyleableAddition(Class<TStyleableAddition> clazz) {
+        return null;
     }
 }

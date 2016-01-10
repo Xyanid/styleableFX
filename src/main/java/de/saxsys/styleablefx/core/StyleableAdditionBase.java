@@ -22,6 +22,7 @@ package de.saxsys.styleablefx.core;
 import javafx.css.CssMetaData;
 import javafx.css.Styleable;
 import javafx.scene.control.Control;
+import javafx.scene.control.Skin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,10 +51,19 @@ public abstract class StyleableAdditionBase {
         }
 
         if (styleable instanceof IStyleableAdditionProvider) {
-            return (IStyleableAdditionProvider) styleable;
-        } else {
-            return (IStyleableAdditionProvider) ((Control) styleable).getSkin();
+            return IStyleableAdditionProvider.class.cast(styleable);
+        } else if (styleable instanceof Control) {
+
+            Skin skin = ((Control) styleable).getSkin();
+
+            if (skin == null) {
+                throw new IllegalArgumentException("Given styleable is a control without a skin");
+            }
+
+            return IStyleableAdditionProvider.class.cast(skin);
         }
+
+        throw new IllegalArgumentException("Given styleable does not implement IStyleableAdditionProvider or is not a Control");
     }
 
     /**
