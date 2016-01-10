@@ -27,6 +27,7 @@ import de.saxsys.styleablefx.mocks.StyleableAdditionProviderPaneMock;
 import javafx.css.Styleable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
@@ -42,6 +43,7 @@ public class StyleableAdditionBaseTest extends BaseUITest {
      * Ensures that a styleable addition provider is retrieved when {@link StyleableAdditionBase#getStyleableAddition(Styleable, Class)} is called with either a region or a node which are directly
      */
     @Test
+    @Ignore(value = "Travis does not support UI test")
     public void ensureStyleableAdditionProviderCanBeRetrieved() {
 
         assertNotNull(StyleableAdditionBase.getStyleableAddition(new StyleableAdditionProviderPaneMock(), StyleableAdditionBaseMockA.class));
@@ -56,6 +58,7 @@ public class StyleableAdditionBaseTest extends BaseUITest {
      * {@link StyleableAdditionBase#getStyleableAddition(Styleable, Class)} is provided with an {@link Styleable} that does not extend {@link IStyleableAdditionProvider}.
      */
     @Test(expected = IllegalArgumentException.class)
+    @Ignore(value = "Travis does not support UI test")
     public void ensureExceptionWillBeThrownIfTheStyleableDoesNotInheritFromIStyleableAdditionProvider() {
 
         StyleableAdditionBase.getStyleableAddition(new Pane(), StyleableAdditionBaseMockA.class);
@@ -67,6 +70,7 @@ public class StyleableAdditionBaseTest extends BaseUITest {
      * extend have a {@link javafx.scene.control.Skin} which {@link IStyleableAdditionProvider}.
      */
     @Test(expected = IllegalArgumentException.class)
+    @Ignore(value = "Travis does not support UI test")
     public void ensureExceptionWillBeThrownIfTheStyleableIsAControlAndDoesNotHaveASkinWhichInheritsFromIStyleableAdditionProvider() {
 
         StyleableAdditionBase.getStyleableAddition(new Button(), StyleableAdditionBaseMockA.class);
