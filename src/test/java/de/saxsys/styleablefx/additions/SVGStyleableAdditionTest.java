@@ -159,7 +159,7 @@ public class SVGStyleableAdditionTest {
 
         Thread.currentThread().setUncaughtExceptionHandler((thread, exception) -> assertThat(exception, new IsInstanceOf(SVGStyleableAddition.ParseException.class)));
 
-        addition.setSvgUrl("corrupted.svg");
+        addition.setSvgUrl("corrupted_no_data.svg");
     }
 
     /**
