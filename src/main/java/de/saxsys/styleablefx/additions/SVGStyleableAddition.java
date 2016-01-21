@@ -36,6 +36,7 @@ import org.xml.sax.SAXParseException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -259,7 +260,13 @@ public class SVGStyleableAddition extends StyleableAdditionBase {
 
         if (newValue != null) {
 
-            File file = getFile(newValue);
+            File file;
+
+            try {
+                file = getFile(newValue);
+            } catch (URISyntaxException e) {
+                throw new IllegalArgumentException("Uri of file is malformed.", e);
+            }
 
             if (file == null || !file.isFile() || !file.exists()) {
                 throw new IllegalArgumentException(new FileNotFoundException(String.format("Given file %s does not exist or is not a file.", newValue)));
@@ -287,8 +294,10 @@ public class SVGStyleableAddition extends StyleableAdditionBase {
      *
      * @return a new {@link File} corresponding to the given path information or null if the filepath can not be
      * resolved
+     *
+     * @throws URISyntaxException if the URI of the file is malformed when retrieved from the resources
      */
-    private File getFile(final String filepath) {
+    private File getFile(final String filepath) throws URISyntaxException {
 
         // try to get the file directly or relative
         File file = new File(filepath);
@@ -299,7 +308,7 @@ public class SVGStyleableAddition extends StyleableAdditionBase {
         // try to find the file in the resources
         URL url = getClass().getClassLoader().getResource(filepath);
         if (url != null) {
-            file = new File(url.getFile());
+            file = new File(url.toURI());
             if (file.isFile()) {
                 return file;
             }
