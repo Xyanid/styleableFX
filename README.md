@@ -2,7 +2,7 @@
 This framework is aimed to easy styling of ui elements in javaFX.
 
 
-![Build Status](http://xyanid.de:8084/app/rest/builds/buildType:%28id:StyleableFX_Build%29/statusIcon)
+[![Build Status](http://xyanid.de:8084/app/rest/builds/buildType:StyleableFX_Build/statusIcon)](http://xyanid.de:8084/viewType.html?buildTypeId=StyleableFX_Build&guest=1)
 
 ### Maven dependency###
 
