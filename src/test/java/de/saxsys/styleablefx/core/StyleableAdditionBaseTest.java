@@ -27,7 +27,6 @@ import de.saxsys.styleablefx.mocks.StyleableAdditionProviderPaneMock;
 import javafx.css.Styleable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
@@ -37,7 +36,6 @@ import static org.junit.Assert.assertNotNull;
  *
  * @author Xyanid on 08.11.2015.
  */
-@Ignore(value = "Travis does not support UI test, so run this manually or fine another CI that supports it")
 public class StyleableAdditionBaseTest extends BaseUITest {
 
     /**

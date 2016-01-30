@@ -23,7 +23,6 @@ import de.saxsys.styleablefx.additions.SVGStyleableAddition;
 import de.saxsys.styleablefx.controls.SVGGroup;
 import de.saxsys.styleablefx.core.BaseUITest;
 import javafx.scene.control.Button;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -35,7 +34,6 @@ import static org.junit.Assert.assertTrue;
  *
  * @author Xyanid on 23.01.2016.
  */
-@Ignore(value = "Travis does not support UI test, so run this manually or fine another CI that supports it")
 public class SVGButtonSkinTest extends BaseUITest {
 
 
