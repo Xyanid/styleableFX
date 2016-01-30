@@ -31,6 +31,7 @@ import org.junit.BeforeClass;
 import java.util.function.Consumer;
 
 import static javafx.application.Application.launch;
+import static javafx.application.Platform.runLater;
 
 /**
  * This class will setup JavaFX so UI components can be created without causing the ExceptionInInitializerError.
@@ -39,27 +40,38 @@ import static javafx.application.Application.launch;
  */
 public class BaseUITest {
 
-    //region Sets up the test so UI elements can be created
+    //region Sets up javFX so that test so UI elements can be created
 
     public static class AsNonApp extends Application {
         @Override
         public void start(Stage primaryStage) throws Exception {}
     }
 
+    /**
+     * This thread will start the javaFX init thread so it can be used by any other UI thread
+     */
+    private static final Thread JAVA_FX_INIT_THREAD = new Thread("JavaFX Init Thread") {
+        public void run() {
+            launch(AsNonApp.class);
+            System.out.printf("FX App thread finished\n");
+        }
+    };
+
     @BeforeClass
     public static void setUpClass() throws InterruptedException {
-        // Initialise Java FX
 
-        System.out.printf("About to launch FX App\n");
-        Thread t = new Thread("JavaFX Init Thread") {
-            public void run() {
-                launch(AsNonApp.class);
-            }
-        };
-        t.setDaemon(true);
-        t.start();
-        System.out.printf("FX App thread started\n");
-        Thread.sleep(500);
+        if (!JAVA_FX_INIT_THREAD.isAlive()) {
+
+            System.out.printf("About to launch FX App\n");
+
+            JAVA_FX_INIT_THREAD.setDaemon(true);
+            JAVA_FX_INIT_THREAD.start();
+
+            System.out.printf("FX App thread started\n");
+
+            //FIXME not pretty but we need to wait until java fx thread is setup
+            Thread.sleep(500);
+        }
     }
 
     //endregion
@@ -281,7 +293,7 @@ public class BaseUITest {
      * @param runnable the {@link Runnable} to be run on a java fx thread
      */
     public static void runOnJavaFXThread(Runnable runnable) {
-        javafx.application.Platform.runLater(runnable);
+        runLater(runnable);
     }
 
     //endregion
