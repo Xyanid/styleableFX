@@ -14,7 +14,7 @@ This is the stable release that can be used in production.
 <dependency>
 		<groupId>de.saxsys</groupId>
 		<artifactId>styleablefx</artifactId>
-		<version>1.0.0</version>
+		<version>1.1.0</version>
 </dependency>
 ```
 
@@ -26,5 +26,5 @@ Here you get new features. This release is unstable and shouldn't be used in pro
 <dependency>
 		<groupId>de.saxsys</groupId>
 		<artifactId>styleablefx</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.2.0-SNAPSHOT</version>
 </dependen>
