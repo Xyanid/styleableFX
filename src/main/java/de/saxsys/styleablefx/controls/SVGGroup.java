@@ -38,6 +38,12 @@ import java.util.Optional;
  */
 public class SVGGroup extends Group implements IStyleableAdditionProvider {
 
+    // region Static
+
+    public static final String DEFAULT_STYLE_CLASS = "svg-group";
+
+    // endregion
+
     // region Classes
 
     /**
@@ -72,6 +78,7 @@ public class SVGGroup extends Group implements IStyleableAdditionProvider {
      * Creates a new instance.
      */
     public SVGGroup() {
+        getStyleClass().setAll(DEFAULT_STYLE_CLASS);
         getChildren().addAll(styleAddition.getSvgGroup());
     }
 
@@ -115,14 +122,21 @@ public class SVGGroup extends Group implements IStyleableAdditionProvider {
 
     /**
      * {@inheritDoc}
+     *
+     * @throws IllegalArgumentException if the given {@link Class} is null.
      */
     @Override
     public <TStyleableAddition extends StyleableAdditionBase> Optional<TStyleableAddition> getStyleableAddition(Class<TStyleableAddition> clazz) {
+
+        if (clazz == null) {
+            throw new IllegalArgumentException("Given clazz must not be null");
+        }
+
         if (clazz.equals(SVGStyleableAddition.class)) {
             return Optional.of(clazz.cast(styleAddition));
-        } else {
-            return Optional.empty();
         }
+
+        return Optional.empty();
     }
 
     // endregion
