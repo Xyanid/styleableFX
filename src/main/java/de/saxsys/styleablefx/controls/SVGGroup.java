@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * This group contains svg data provided by an SVG Parser. It allows for the svg data to be switched dynamically via its styleable properties.
+ * This group contains svg data provided by an SVG Parser. It allows for the svg data to be switched dynamically via its styleable contentMap.
  *
  * @author Xyanid on 09.11.2015.
  */
@@ -66,7 +66,7 @@ public class SVGGroup extends Group implements IStyleableAdditionProvider {
     // region Fields
 
     /**
-     * The skin addition will provide the styleable properties as well as handling loading of svg files.
+     * The skin addition will provide the styleable contentMap as well as handling loading of svg files.
      */
     private SVGStyleableAddition styleAddition = new SVGStyleableAddition();
 
