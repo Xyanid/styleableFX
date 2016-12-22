@@ -27,4 +27,4 @@ Here you get new features. This release is unstable and shouldn't be used in pro
 		<groupId>de.saxsys</groupId>
 		<artifactId>styleablefx</artifactId>
 		<version>1.2.0-SNAPSHOT</version>
-</dependen>
+</dependency>
