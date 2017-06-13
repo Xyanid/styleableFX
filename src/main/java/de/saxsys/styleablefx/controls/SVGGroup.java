@@ -1,20 +1,14 @@
 /*
+ * Copyright 2015 - 2017 Xyanid
  *
- * ******************************************************************************
- *  * Copyright 2015 - 2016 Xyanid
- *  *
- *  * Licensed under the Apache License, Version 2.0 (the "License");
- *  * you may not use this file except in compliance with the License.
- *  * You may obtain a copy of the License at
- *  *
- *  *   http://www.apache.org/licenses/LICENSE-2.0
- *  *
- *  * Unless required by applicable law or agreed to in writing, software
- *  * distributed under the License is distributed on an "AS IS" BASIS,
- *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  * See the License for the specific language governing permissions and
- *  * limitations under the License.
- *  *****************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and limitations under the License.
  */
 
 package de.saxsys.styleablefx.controls;
@@ -32,7 +26,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * This group contains svg data provided by an SVG Parser. It allows for the svg data to be switched dynamically via its styleable properties.
+ * This group contains svg data provided by an SVG Parser. It allows for the svg data to be switched dynamically via its styleable contentMap.
  *
  * @author Xyanid on 09.11.2015.
  */
@@ -66,7 +60,7 @@ public class SVGGroup extends Group implements IStyleableAdditionProvider {
     // region Fields
 
     /**
-     * The skin addition will provide the styleable properties as well as handling loading of svg files.
+     * The skin addition will provide the styleable contentMap as well as handling loading of svg files.
      */
     private SVGStyleableAddition styleAddition = new SVGStyleableAddition();
 
@@ -106,7 +100,7 @@ public class SVGGroup extends Group implements IStyleableAdditionProvider {
 
     // endregion
 
-    // region Override SVGGroup
+    // region Override Group
 
     /**
      * {@inheritDoc}
