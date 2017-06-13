@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 - 2016 Xyanid
+ * Copyright 2015 - 2017 Xyanid
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -53,7 +53,7 @@ public class SVGStyleableAddition extends StyleableAdditionBase {
     public class ParseException extends RuntimeException {
 
         /**
-         * Createas new instance with the given message and cause.
+         * Creates new instance with the given message and cause.
          *
          * @param message the {@link String} to use as the message.
          * @param cause   the actual cause for this {@link RuntimeException} to be thrown.
@@ -104,6 +104,7 @@ public class SVGStyleableAddition extends StyleableAdditionBase {
          * @param node, node which contains the property
          * @return the property which is styleable
          */
+        @SuppressWarnings ("unchecked")
         @Override
         public StyleableProperty<String> getStyleableProperty(final Styleable node) {
             return (StyleableProperty<String>) getStyleableAddition(node, SVGStyleableAddition.class).svgUrl;
@@ -131,6 +132,7 @@ public class SVGStyleableAddition extends StyleableAdditionBase {
          * @param node, node which contains the property
          * @return the property which is styleable
          */
+        @SuppressWarnings ("unchecked")
         @Override
         public StyleableProperty<Boolean> getStyleableProperty(final Styleable node) {
             return (StyleableProperty<Boolean>) getStyleableAddition(node, SVGStyleableAddition.class).willCacheSvgProperty();
